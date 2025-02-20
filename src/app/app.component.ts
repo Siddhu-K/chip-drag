@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import {
   CdkDragDrop,
   DragDropModule,
@@ -29,6 +29,16 @@ export class AppComponent {
     { name: 'Chip 4', selected: true },
     { name: 'Chip 5', selected: true },
   ]);
+
+  chips = computed(() =>
+    this.chip_list()
+      .filter((chip) => chip.selected)
+      .map((chip) => chip.name)
+  );
+
+  chip_effect = effect(() => {
+    console.log(this.chips());
+  });
 
   drop(event: CdkDragDrop<Chip[]>): void {
     this.chip_list.update((chip_list) => {
