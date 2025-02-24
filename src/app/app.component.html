@@ -1,14 +1,6 @@
-<mat-chip-listbox
-  multiple
-  cdkDropList
-  cdkDropListOrientation="vertical"
-  class="mat-mdc-chip-set-stacked"
-  (cdkDropListDropped)="drop($event)"
->
+<mat-chip-listbox multiple class="mat-mdc-chip-set-stacked">
   @for (i of chip_list(); track i; let index = $index) {
   <mat-chip-option
-    cdkDrag
-    [cdkDragStartDelay]="{ touch: 200, mouse: 0 }"
     [selected]="i.selected"
     (selectionChange)="chipSelection($event, index)"
   >
@@ -16,3 +8,4 @@
   </mat-chip-option>
   }
 </mat-chip-listbox>
+<button (click)="moveChips()">Move Chip</button>

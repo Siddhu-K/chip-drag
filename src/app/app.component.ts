@@ -1,9 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
-import {
-  CdkDragDrop,
-  DragDropModule,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { Component, signal } from '@angular/core';
 import {
   MatChipSelectionChange,
   MatChipsModule,
@@ -16,7 +11,7 @@ interface Chip {
 
 @Component({
   selector: 'app-root',
-  imports: [DragDropModule, MatChipsModule],
+  imports: [MatChipsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -30,20 +25,10 @@ export class AppComponent {
     { name: 'Chip 5', selected: true },
   ]);
 
-  chips = computed(() =>
-    this.chip_list()
-      .filter((chip) => chip.selected)
-      .map((chip) => chip.name)
-  );
-
-  chip_effect = effect(() => {
-    console.log(this.chips());
-  });
-
-  drop(event: CdkDragDrop<Chip[]>): void {
+  moveChips(): void {
+    // randomize the order of the chips
     this.chip_list.update((chip_list) => {
-      moveItemInArray(chip_list, event.previousIndex, event.currentIndex);
-      return [...chip_list];
+      return chip_list.sort(() => Math.random() - 0.5);
     });
   }
 
